@@ -1,15 +1,15 @@
 {
-	"name": "2pow17",
-	"short_name": "2pow17",
+	"name": "2048",
+	"short_name": "2048",
 	"start_url": ".",
 	"display": "standalone",
 	"background_color": "#faf8ef",
 	"theme_color": "#8f7a66",
 	"icons": [
 		{
-			"src": "https://cdn-icons-png.flaticon.com/512/566/566058.png",
-			"sizes": "512x512",
-			"type": "image/png",
+			"src": "https://t-touse.github.io/2pow17/assets/icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
 			"purpose": "any maskable"
 		}
 	]
