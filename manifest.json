@@ -3,8 +3,8 @@
 	"short_name": "2048",
 	"start_url": ".",
 	"display": "standalone",
-	"background_color": "#faf8ef",
-	"theme_color": "#8f7a66",
+	"background_color": "#d1d8e0",
+	"theme_color": "#778ca3",
 	"icons": [
 		{
 			"src": "https://t-touse.github.io/2pow17/assets/icon.svg",

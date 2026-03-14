@@ -47,6 +47,11 @@
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register('./sw.js')
 				.catch(err => console.error("Erreur SW:", err));
+			// Dans main.mjs
+			navigator.serviceWorker.addEventListener('controllerchange', () => {
+				// On recharge la page automatiquement dès que le nouveau code est prêt
+				window.location.reload();
+			});
 		}
 	</script>
 </body>
