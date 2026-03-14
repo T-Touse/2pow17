@@ -1,0 +1,13 @@
+{
+  "name": "2pow17",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "tailwind": "^4.0.0"
+  }
+}

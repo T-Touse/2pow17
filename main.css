@@ -1,0 +1,148 @@
+:root {
+	--bg: #faf8ef;
+	--grid-bg: #bbada0;
+	--cell-bg: #cdc1b4;
+	--text: #776e65;
+	--white: #f9f6f2;
+}
+
+body {
+	background: var(--bg);
+	color: var(--text);
+	font-family: sans-serif;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+	touch-action: none;
+	user-select: none;
+}
+
+header {
+	width: 100%;
+	max-width: 400px;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+#score-box {
+	background: #bbada0;
+	padding: 10px 20px;
+	border-radius: 6px;
+	color: white;
+	text-align: center;
+}
+
+#game-container {
+    position: relative;
+    width: 95vw;          /* Prend presque toute la largeur sur mobile */
+    max-width: 400px;     /* Bloque la taille sur PC */
+    aspect-ratio: 1 / 1;  /* Reste toujours carré */
+    background: var(--grid-bg);
+    border-radius: 8px;
+    padding: 2.5%;        /* Padding relatif */
+    box-sizing: border-box;
+}
+
+.grid-static {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2.5%;            /* Gap relatif */
+    width: 100%;
+    height: 100%;
+}
+
+.cell-empty {
+    background: var(--cell-bg);
+    border-radius: 4px;
+}
+
+/* Les tuiles utilisent maintenant des % pour le placement */
+.tile {
+    position: absolute;
+    width: 21.875%;  /* (100% - (3 gaps de 2.5%)) / 4 */
+    height: 21.875%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: transform 100ms ease-out;
+    z-index: 10;
+}
+
+.cell-empty {
+	background: var(--cell-bg);
+	border-radius: 4px;
+}
+
+.tile-2 {
+	background: #eee4da;
+	color: #776e65;
+}
+
+.tile-4 {
+	background: #ede0c8;
+	color: #776e65;
+}
+
+.tile-8 {
+	background: #f2b179;
+	color: white;
+}
+
+.tile-16 {
+	background: #f59563;
+	color: white;
+}
+
+.tile-32 {
+	background: #f67c5f;
+	color: white;
+}
+
+.tile-64 {
+	background: #f65e3b;
+	color: white;
+}
+
+.tile-128 {
+	background: #edcf72;
+	color: white;
+	font-size: 1.5rem;
+}
+
+.tile-new {
+	animation: pop 200ms ease;
+}
+
+@keyframes pop {
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+footer {
+	margin-top: 20px;
+	display: flex;
+	gap: 10px;
+}
+
+button {
+	padding: 10px 20px;
+	border: none;
+	background: #8f7a66;
+	color: white;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+}

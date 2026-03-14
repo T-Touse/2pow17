@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>2powX</title>
+	<link rel="stylesheet" href="main.css">
+	<link rel="manifest" href="./manifest.json">
+	<meta name="theme-color" content="#8f7a66">
+	<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/566/566058.png">
+</head>
+
+<body>
+	<header>
+		<h1 style="margin:0">2powX</h1>
+		<div id="score-box">SCORE<br><span id="score">0</span></div>
+	</header>
+	<div id="game-container">
+		<div class="grid-static">
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+			<div class="cell-empty"></div>
+		</div>
+		<div id="tile-layer"></div>
+	</div>
+	<footer>
+		<button onclick="undo()">RETOUR</button>
+		<button onclick="initGame()">NOUVEAU</button>
+	</footer>
+	<script type="module" src="main.mjs"></script>
+	<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('./sw.js')
+				.catch(err => console.error("Erreur SW:", err));
+		}
+	</script>
+</body>
+
+</html>
