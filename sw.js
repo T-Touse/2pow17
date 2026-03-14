@@ -1,7 +1,8 @@
-const CACHE_NAME = '2pow17-v1';
+const CACHE_NAME = '2048-v1';
 const ASSETS = [
 	'./',
 	'./index.html',
+	'./assets/icon.svg',
 	'./main.css',
 	'./main.mjs',
 	'./src/components/Tile.mjs'
