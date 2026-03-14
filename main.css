@@ -29,107 +29,6 @@ header {
 	box-sizing: border-box;
 }
 
-#score-box {
-	background: #bbada0;
-	padding: 10px 20px;
-	border-radius: 6px;
-	color: white;
-	text-align: center;
-}
-
-#game-container {
-    position: relative;
-    width: 95vw;          /* Prend presque toute la largeur sur mobile */
-    max-width: 400px;     /* Bloque la taille sur PC */
-    aspect-ratio: 1 / 1;  /* Reste toujours carré */
-    background: var(--grid-bg);
-    border-radius: 8px;
-    padding: 2.5%;        /* Padding relatif */
-    box-sizing: border-box;
-}
-
-.grid-static {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 2.5%;            /* Gap relatif */
-    width: 100%;
-    height: 100%;
-}
-
-.cell-empty {
-    background: var(--cell-bg);
-    border-radius: 4px;
-}
-
-/* Les tuiles utilisent maintenant des % pour le placement */
-.tile {
-    position: absolute;
-    width: 21.875%;  /* (100% - (3 gaps de 2.5%)) / 4 */
-    height: 21.875%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: transform 100ms ease-out;
-    z-index: 10;
-}
-
-.cell-empty {
-	background: var(--cell-bg);
-	border-radius: 4px;
-}
-
-.tile-2 {
-	background: #eee4da;
-	color: #776e65;
-}
-
-.tile-4 {
-	background: #ede0c8;
-	color: #776e65;
-}
-
-.tile-8 {
-	background: #f2b179;
-	color: white;
-}
-
-.tile-16 {
-	background: #f59563;
-	color: white;
-}
-
-.tile-32 {
-	background: #f67c5f;
-	color: white;
-}
-
-.tile-64 {
-	background: #f65e3b;
-	color: white;
-}
-
-.tile-128 {
-	background: #edcf72;
-	color: white;
-	font-size: 1.5rem;
-}
-
-.tile-new {
-	animation: pop 200ms ease;
-}
-
-@keyframes pop {
-	from {
-		transform: scale(0);
-	}
-
-	to {
-		transform: scale(1);
-	}
-}
 
 footer {
 	margin-top: 20px;
@@ -145,4 +44,241 @@ button {
 	border-radius: 4px;
 	font-weight: bold;
 	cursor: pointer;
+}
+
+.box {
+	background: #bbada0;
+	padding: 10px 20px;
+	border-radius: 6px;
+	color: white;
+	text-align: center;
+}
+
+#game-container {
+	position: relative;
+	width: min(75vh, 95vw, 1024px);
+	/* Bloque la taille sur PC */
+	aspect-ratio: 1 / 1;
+	/* Reste toujours carré */
+	background: var(--grid-bg);
+	border-radius: .75rem;
+	padding: .75rem;
+	/* Padding relatif */
+	box-sizing: border-box;
+}
+
+.grid-static {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	gap: .5rem;
+	/* Gap relatif */
+	width: 100%;
+	height: 100%;
+}
+
+.cell-empty {
+	background: var(--cell-bg);
+	border-radius: 4px;
+}
+
+.particle {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* On ajoute un petit effet de lueur sur les grosses tuiles */
+.tile-128,
+.tile-256,
+.tile-512,
+.tile-1024,
+.tile-2048 {
+	box-shadow:
+		inset 0 3px var(--t-light),
+		inset 0 -7px var(--t-shadow),
+		0 0 15px var(--t-background);
+	/* Glow extérieur */
+}
+
+@keyframes shine {
+	0% {
+		filter: brightness(1);
+	}
+
+	50% {
+		filter: brightness(1.2);
+	}
+
+	100% {
+		filter: brightness(1);
+	}
+}
+
+.tile-2048 {
+	animation: shine 2s infinite ease-in-out;
+}
+
+#tile-layer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	padding: .75rem;
+	box-sizing: border-box;
+
+	.grid {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+
+/* Les tuiles */
+.tile {
+	position: absolute;
+	width: calc((100% - .5rem * 3 - .75rem * 2) / 4);
+	aspect-ratio: 1;
+	display: flex;
+
+	z-index: 10;
+
+	background-color: var(--t-background);
+	color: var(--t-text);
+
+	border: solid 2px var(--t-outline);
+	border-radius: 8px;
+
+	transition: all 100ms ease-out;
+	transform-origin: center center;
+
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 1.5rem;
+
+	box-shadow:
+		inset 0 3px var(--t-light),
+		inset 0 -7px var(--t-shadow);
+}
+
+/* Palette complète pour 2powX */
+
+.tile-2 {
+	--t-background: #eee4da;
+	--t-text: #776e65;
+	--t-outline: #dcd0c5;
+	--t-light: #f4ebe3;
+	--t-shadow: #d5c7ba;
+}
+
+.tile-4 {
+	--t-background: #ede0c8;
+	--t-text: #776e65;
+	--t-outline: #dbcdb4;
+	--t-light: #f5ebda;
+	--t-shadow: #d0c0a3;
+}
+
+.tile-8 {
+	--t-background: #f2b179;
+	--t-text: #f9f6f2;
+	--t-outline: #e09e66;
+	--t-light: #f7c9a3;
+	--t-shadow: #d99256;
+}
+
+.tile-16 {
+	--t-background: #f59563;
+	--t-text: #f9f6f2;
+	--t-outline: #e27b4a;
+	--t-light: #fbba9c;
+	--t-shadow: #d66f40;
+}
+
+.tile-32 {
+	--t-background: #f67c5f;
+	--t-text: #f9f6f2;
+	--t-outline: #e16043;
+	--t-light: #fba48f;
+	--t-shadow: #d44d33;
+}
+
+.tile-64 {
+	--t-background: #f65e3b;
+	--t-text: #f9f6f2;
+	--t-outline: #da462a;
+	--t-light: #fb927d;
+	--t-shadow: #c4381e;
+}
+
+.tile-128 {
+	--t-background: #edcf72;
+	--t-text: #f9f6f2;
+	--t-outline: #d9bc5d;
+	--t-light: #f5e1a4;
+	--t-shadow: #c9af52;
+	font-size: 1.5rem;
+}
+
+.tile-256 {
+	--t-background: #edcc61;
+	--t-text: #f9f6f2;
+	--t-outline: #d9b84c;
+	--t-light: #f5df97;
+	--t-shadow: #c9aa3f;
+	font-size: 1.5rem;
+}
+
+.tile-512 {
+	--t-background: #edc850;
+	--t-text: #f9f6f2;
+	--t-outline: #d9b43c;
+	--t-light: #f5dd8b;
+	--t-shadow: #c9a62f;
+	font-size: 1.5rem;
+}
+
+.tile-1024 {
+	--t-background: #edc53f;
+	--t-text: #f9f6f2;
+	--t-outline: #d9b12b;
+	--t-light: #f5db7e;
+	--t-shadow: #c9a21f;
+	font-size: 1.25rem;
+}
+
+.tile-2048 {
+	--t-background: #edc22e;
+	--t-text: #f9f6f2;
+	--t-outline: #d9ae1a;
+	--t-light: #f5d972;
+	--t-shadow: #c99e0e;
+	font-size: 1.25rem;
+}
+
+/* Bonus : Pour les fous qui vont au-delà */
+
+.tile-4096 {
+	--t-background: #3c3a32;
+	--t-text: #f9f6f2;
+	--t-outline: #2c2a22;
+	--t-light: #5c5a52;
+	--t-shadow: #1c1a12;
+	font-size: 1.25rem;
+}
+
+.tile-8192 {
+	--t-background: #1e1e1e;
+	--t-text: #edc22e;
+	/* Texte doré sur fond noir */
+	--t-outline: #000;
+	--t-light: #333;
+	--t-shadow: #000;
+	font-size: 1.25rem;
 }
