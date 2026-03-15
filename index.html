@@ -15,28 +15,40 @@
 <body>
 	<header>
 		<h1 style="margin:0">2048</h1>
-		<div id="score-box" class="box" >SCORE<br><span id="score">0</span></div>
+		<div id="score-box" class="box">SCORE<br><div id="score">0</span></div>
 	</header>
 	<div id="game-container">
 		<div class="grid-static">
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
-			<div class="cell-empty"></div>
+			<div class="grid">
+				<div class="tile tile-empty" style="left:0;top:0;"></div>
+				<div class="tile tile-empty" style="left:25%;top:0;"></div>
+				<div class="tile tile-empty" style="left:50%;top:0;"></div>
+				<div class="tile tile-empty" style="left:75%;top:0;"></div>
+
+				<div class="tile tile-empty" style="left:0;top:25%;"></div>
+				<div class="tile tile-empty" style="left:25%;top:25%;"></div>
+				<div class="tile tile-empty" style="left:50%;top:25%;"></div>
+				<div class="tile tile-empty" style="left:75%;top:25%;"></div>
+
+				<div class="tile tile-empty" style="left:0;top:50%;"></div>
+				<div class="tile tile-empty" style="left:25%;top:50%;"></div>
+				<div class="tile tile-empty" style="left:50%;top:50%;"></div>
+				<div class="tile tile-empty" style="left:75%;top:50%;"></div>
+
+				<div class="tile tile-empty" style="left:0;top:75%;"></div>
+				<div class="tile tile-empty" style="left:25%;top:75%;"></div>
+				<div class="tile tile-empty" style="left:50%;top:75%;"></div>
+				<div class="tile tile-empty" style="left:75%;top:75%;"></div>
+			</div>
 		</div>
-		<div id="tile-layer"></div>
+		<div id="tile-layer" class="grid-static"></div>
+	</div>
+	<div id="game-over" class="hidden">
+		<div class="game-over-content">
+			<h1>Game Over !</h1>
+			<p>Score final : <span id="final-score">0</span></p>
+			<button id="retry-btn" onclick="initGame()">Réessayer</button>
+		</div>
 	</div>
 	<footer>
 		<button onclick="undo()">RETOUR</button>

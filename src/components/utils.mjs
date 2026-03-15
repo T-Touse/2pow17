@@ -1,25 +1,13 @@
-let cellPositions = []
-function computeCellPositions(){
-	const container = document.body
-	const cells = [...container.querySelectorAll(".cell-empty")]
-	const rect = container.getBoundingClientRect()
 
-	cellPositions = cells.map(cell=>{
-		const r = cell.getBoundingClientRect()
-
-		return {
-			x: r.left - rect.left,
-			y: r.top - rect.top
-		}
-	})
+export function toPos(col, row) {
+	return {
+		left: `${col * 25}%`,
+		top: `${row * 25}%`
+	}
 }
-window.addEventListener('resize',computeCellPositions)
-computeCellPositions()
 
-
-export function getPos(row,col,cols){
-
-	const index = row*cols+col
-
-	return cellPositions[index]
+export function setPos(el, col, row) {
+	const pos = toPos(col, row)
+	el.style.left = pos.left
+	el.style.top = pos.top
 }

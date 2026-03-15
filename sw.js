@@ -1,11 +1,19 @@
-const CACHE_NAME = '2048-v1';
+const CACHE_NAME = '2048-v2';
 const ASSETS = [
 	'./',
 	'./index.html',
 	'./assets/icon.svg',
 	'./main.css',
 	'./main.mjs',
-	'./src/components/Tile.mjs'
+	'./src/components/Grid.mjs',
+	'./src/components/ScoreBoard.mjs',
+	'./src/components/Tile.mjs',
+	'./src/components/utils.mjs',
+	'./src/core/Grid.mjs',
+	'./src/core/History.mjs',
+	'./src/core/Tile.mjs',
+	'./src/lib/UIX.mjs',
+	'./src/control.mjs',
 ];
 
 // Installation : on met en cache tous les fichiers

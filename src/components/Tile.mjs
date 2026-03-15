@@ -1,3 +1,5 @@
+import { setPos, toPos } from "./utils.mjs";
+
 const POP = [
 	[{ scale: 0, opacity: 0 }, { scale: 1.1, opacity: 1 }, { scale: 1, opacity: 1 }],
 	{ duration: 200, easing: "ease-out" }
@@ -41,20 +43,6 @@ function burst(el) {
 		}).onfinish = () => p.remove();
 	}
 }
-
-function toPos(col, row) {
-	return {
-		left: `${col * 25}%`,
-		top: `${row * 25}%`
-	}
-}
-
-function setPos(el, col, row) {
-	const pos = toPos(col, row)
-	el.style.left = pos.left
-	el.style.top = pos.top
-}
-
 
 function update(el, tile) {
 	el.className = `tile tile-${tile.value}`
