@@ -1,8 +1,8 @@
 import { Fragment, SoundManager } from "../lib/UIX.mjs"
 import { Tile } from "./Tile.mjs"
-const bubble_pop = '../../assets/bubble_pop.mp3'
-const multi_pop = '../../assets/multi_pop.mp3'
-const swipe = '../../assets/swipe.mp3'
+const bubble_pop = './assets/bubble_pop.mp3'
+const multi_pop = './assets/multi_pop.mp3'
+const swipe = './assets/swipe.mp3'
 
 const sound = new SoundManager()
 
