@@ -9,12 +9,13 @@
 body {
 	background: var(--bg);
 	color: var(--text);
-	font-family: sans-serif;
+	font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
 	margin: 0;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	flex-direction: column;align-items: center; 
 	height: 100vh;
+	height: 100dvh;
+	/* Utilise la hauteur dynamique sur mobile (évite le bug de la barre d'adresse) */
 	overflow: hidden;
 	touch-action: none;
 	user-select: none;
@@ -25,31 +26,52 @@ header {
 	max-width: 400px;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 20px;
 	box-sizing: border-box;
 }
 
-
 footer {
-	margin-top: 20px;
-	display: flex;
-	gap: 10px;
-	flex-direction: column;
+	width: 100%;
+	max-width: 400px;
+	padding: 20px;
+	padding-bottom: 40px;
+	/* Espace pour le pouce en bas */
+	box-sizing: border-box;
 }
 
 .row {
 	display: flex;
+	justify-content: space-between;
+	/* Boutons aux extrémités */
 	gap: 10px;
 }
 
 button {
-	padding: 10px 20px;
-	border: none;
-	background: #8f7a66;
-	color: white;
-	border-radius: 4px;
+	flex: 1;
+	/* Les boutons prennent la même largeur */
+	padding: 15px;
+	background: #70a1ff;
+	color: #fff;
+	border: solid 4px #fff;
+	border-radius: 8px;
+	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;
+	text-transform: uppercase;
+	box-sizing: border-box;
+	margin-bottom: 7px;
+	transition: all .2s ease-in-out;
+	box-shadow:
+		inset 0 3px #79a8fe,
+		inset 0 -7px #1e90ff;
+}
+button:hover{
+	background: #1a87f4;
+	transform: translateY(3px);
+	box-shadow:
+		inset 0 3px #70a1ff,
+		inset 0 -4px #167ce2;
 }
 
 #score {

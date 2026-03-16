@@ -14,9 +14,17 @@
 
 <body>
 	<header>
-		<h1 style="margin:0">2048</h1>
-		<div id="score-box" class="box">SCORE<br><div id="score">0</span></div>
+		<div>
+			<h1 style="margin:0">2048</h1>
+			<small onclick="document.querySelector('dialog').showModal()"
+				style="cursor:pointer; opacity:0.6">Crédits</small>
+		</div>
+		<div id="score-box" class="box">
+			<span style="font-size: 0.7rem; font-weight: bold; opacity:0.8">SCORE</span><br>
+			<span id="score" style="font-size: 1.5rem; font-weight: bold;">0</span>
+		</div>
 	</header>
+
 	<div id="game-container">
 		<div class="grid-static">
 			<div class="grid">
@@ -50,15 +58,35 @@
 			<button id="retry-btn" onclick="restartGame()">Réessayer</button>
 		</div>
 	</div>
+
 	<footer>
 		<div class="row">
 			<button onclick="undo()">RETOUR</button>
 			<button onclick="restartGame()">NOUVEAU</button>
 		</div>
-		<p>Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=323639">Universfield</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=323639">Pixabay</a></p>
-		<p>Sound Effect by <a href="https://pixabay.com/users/floraphonic-38928062/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=188167">floraphonic</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=188167">Pixabay</a></p>
-		<p>Sound Effect by <a href="https://pixabay.com/users/u_nharq4usid-46743448/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=255512">u_nharq4usid</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=255512">Pixabay</a></p>
 	</footer>
+
+	<dialog id="credits-dialog" style="border:none; border-radius:8px; padding:20px; line-height:1.6">
+		<h3>Crédits Sons</h3>
+		<div id="credits-list">
+			<p>Sound Effect by <a
+				href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=323639">Universfield</a>
+			from <a
+				href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=323639">Pixabay</a>
+		</p>
+		<p>Sound Effect by <a
+				href="https://pixabay.com/users/floraphonic-38928062/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=188167">floraphonic</a>
+			from <a
+				href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=188167">Pixabay</a>
+		</p>
+		<p>Sound Effect by <a
+				href="https://pixabay.com/users/u_nharq4usid-46743448/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=255512">u_nharq4usid</a>
+			from <a
+				href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=255512">Pixabay</a>
+		</p>
+		</div>
+		<button onclick="this.closest('dialog').close()" style="margin-top:10px; width:100%">Fermer</button>
+	</dialog>
 	<script type="module" src="main.mjs"></script>
 	<script>
 		if ('serviceWorker' in navigator) {

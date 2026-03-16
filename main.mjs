@@ -43,6 +43,8 @@ onMove((dir) => {
 
 if(grid.isEmpty)
 	restartGame()
+else
+	setScore(scoreBoard, grid.score)
 
 window.restartGame = restartGame
 window.undo = () => grid.undo()

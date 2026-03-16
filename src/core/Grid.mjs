@@ -130,6 +130,7 @@ export class Grid extends Model {
 	}
 
 	clear() {
+		this.#score = 0
 		this.#tiles.clear()
 		this._emit('update', {})
 	}
