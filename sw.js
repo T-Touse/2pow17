@@ -1,9 +1,11 @@
-const CACHE_NAME = '2048-v3.1';
+const CACHE_NAME = '2048-v4';
 const ASSETS = [
 	'./',
 	'./index.html',
 	'./assets/icon.svg',
 	'./assets/bubble_pop.mp3',
+	'./assets/multi_pop.mp3',
+	'./assets/swipe_pop.mp3',
 	'./main.css',
 	'./main.mjs',
 	'./src/components/Grid.mjs',
