@@ -1,5 +1,10 @@
-import { Fragment } from "../lib/UIX.mjs"
+import { Fragment, SoundManager } from "../lib/UIX.mjs"
 import { Tile } from "./Tile.mjs"
+const bubble_pop = '../../assets/bubble_pop.mp3'
+const multi_pop = '../../assets/multi_pop.mp3'
+const swipe = '../../assets/swipe.mp3'
+
+const sound = new SoundManager()
 
 const SHAKE = [
 	[
@@ -20,9 +25,22 @@ export function Grid(grid){
 	grid.on?.("spawn",(tile)=>{
 		tiles.sync(grid.getTiles(),Tile)
 	})
-	grid.on?.("update",()=>{
+	let combo = 0
+	grid.on?.("update",({hasMerge})=>{
 		tiles.sync(grid.getTiles(),Tile)
 		//div.animate(...SHAKE)
+		if(hasMerge){
+			sound.play(
+				Math.random()<.5?bubble_pop:multi_pop
+				,Math.min(2.5,.8 + (combo * 0.5))
+			)
+			combo++
+		}else{
+			combo = 0
+			sound.play(
+				swipe,.8+Math.random()*.4
+			)
+		}
 	})
 	
 	grid.on?.("gameover",()=>{

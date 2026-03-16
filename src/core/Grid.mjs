@@ -16,6 +16,7 @@ export class Grid extends Model {
 	get rows() { return this.#rows }
 	get cols() { return this.#cols }
 	get score() { return this.#score }
+	get isEmpty() { return this.#tiles.size == 0 }
 
 	#history = new History();
 
@@ -65,6 +66,7 @@ export class Grid extends Model {
 
 
 	#slideLine(tiles, index, isVert, isRev) {
+		let hasMerge = false
 
 		let target = 0
 		if (isRev) target = (isVert ? this.#rows : this.#cols) - 1
@@ -95,9 +97,13 @@ export class Grid extends Model {
 				this.#score += tile.value
 				this.#tiles.delete(next)
 				i++
+
+				hasMerge ||= true
 			}
 			target += step
 		}
+
+		return { hasMerge }
 	}
 
 
@@ -106,6 +112,8 @@ export class Grid extends Model {
 		const isVert = direction === "up" || direction === "down"
 		const isRev = direction === "down" || direction === "right"
 
+		let hasMerge = false
+
 		const count = isVert ? this.#cols : this.#rows
 
 		for (let i = 0; i < count; i++) {
@@ -113,14 +121,17 @@ export class Grid extends Model {
 
 			if (isRev) tiles = [...tiles].reverse()
 
-			this.#slideLine(tiles, i, isVert, isRev)
+			const rsult = this.#slideLine(tiles, i, isVert, isRev)
+			hasMerge ||= rsult.hasMerge
 		}
-		this._emit('update')
+		this.#history.push(this.serialize())
+		this._emit('update', { hasMerge })
+		this.triggerAutoSave();
 	}
 
 	clear() {
 		this.#tiles.clear()
-		this._emit('update')
+		this._emit('update', {})
 	}
 
 	spawnRandom() {
@@ -140,19 +151,8 @@ export class Grid extends Model {
 	undo() {
 		const previous = this.#history.undo();
 		if (!previous) return;
-
-		// On nettoie tout
-		this.#tiles.forEach(t => t._emit('destroy'));
-		this.#tiles.clear();
-
-		// On reconstruit
-		this.#score = previous.score;
-		previous.tiles.forEach(tData => {
-			const tile = new Tile(this, tData.row, tData.col, tData.value);
-			this.addTile(tile);
-			this._emit('spawn', tile); // Pour recréer l'élément DOM via le Binder
-		});
-		this._emit('update');
+		this.hydrate(previous)
+		this.save()
 	}
 
 	checkGameOver() {
@@ -175,6 +175,39 @@ export class Grid extends Model {
 		return true;
 	}
 
+	#saveTimeout;
+	triggerAutoSave() {
+		clearTimeout(this.#saveTimeout);
+		this.#saveTimeout = setTimeout(() => {
+			Model.save(this)
+			console.log("💾 Jeu sauvegardé");
+		}, 500);
+	}
+
+	hydrate(data) {
+		if (!data) return;
+
+		// 1. Nettoyage complet
+		this.#tiles.forEach(t => t._emit('destroy'));
+		this.#tiles.clear();
+
+		// 2. Restauration des propriétés
+		this.#score = data.score || 0;
+		this.#rows = data.rows || 4;
+		this.#cols = data.cols || 4;
+
+		// 3. Recréation des tuiles
+		if (data.tiles) {
+			data.tiles.forEach(tData => {
+				const tile = new Tile(this, tData.row, tData.col, tData.value);
+				this.addTile(tile);
+				// On émet spawn pour que l'UI crée le composant visuel
+				this._emit('spawn', tile);
+			});
+		}
+
+		this._emit('update', { isRestored: true });
+	}
 	serialize() {
 		return {
 			rows: this.#rows,

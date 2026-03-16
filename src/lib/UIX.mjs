@@ -1,5 +1,10 @@
 export class Model {
 	#events = new Map
+
+	get storageKey(){
+		return this.constructor.name
+	}
+	
 	on(name, listener) {
 		if (!this.#events.has(name))
 			this.#events.set(name, new Set)
@@ -11,7 +16,20 @@ export class Model {
 			cb(...args)
 		})
 	}
+	hydrate(data) { }
 	serialize() { }
+
+	static save(model){
+		if (!model.storageKey) return;
+        const data = model.serialize();
+        localStorage.setItem(model.storageKey, JSON.stringify(data));
+	}
+	static load(model){
+		if (!model.storageKey) return null;
+        const saved = localStorage.getItem(model.storageKey);
+		model.hydrate(saved ? JSON.parse(saved) : null)
+        return model
+	}
 }
 
 const VIEWS = new Map()
@@ -27,22 +45,6 @@ export function useView(model) {
 	return VIEWS.get(model)
 }
 
-let saveTimeout;
-function autoSave(model) {
-	clearTimeout(saveTimeout);
-	saveTimeout = setTimeout(() => {
-		const data = model.serialize();
-
-		console.log("Partie sauvegardée !");
-	}, 500); // Attend 500ms d'inactivité avant de sauvegarder
-}
-
-window.addEventListener('visibilitychange', () => {
-	if (document.visibilityState === 'hidden') {
-		// Sauvegarde immédiate sans délai
-
-	}
-});
 export class Fragment {
 	#keys = new Map();
 	#parent;
@@ -74,3 +76,23 @@ export class Fragment {
 		});
 	}
 }
+
+export class SoundManager {
+	play(src,playbackRate = 1) {
+		const audio = new Audio(src);
+		audio.playbackRate = playbackRate;
+
+		audio.play().catch(e => console.warn("Audio blocké : attend un clic utilisateur."));
+	}
+}
+
+window.addEventListener('pointerdown', () => {
+	const silent = new Audio();
+	silent.volume = 0;
+	silent.play().catch(() => { });
+}, { once: true });
+window.addEventListener('keydown', () => {
+	const silent = new Audio();
+	silent.volume = 0;
+	silent.play().catch(() => { });
+}, { once: true });

@@ -34,6 +34,12 @@ footer {
 	margin-top: 20px;
 	display: flex;
 	gap: 10px;
+	flex-direction: column;
+}
+
+.row {
+	display: flex;
+	gap: 10px;
 }
 
 button {
@@ -187,8 +193,9 @@ button {
 	background-color: var(--t-background);
 	color: var(--t-text);
 
-	border: solid 2px var(--t-outline);
+	border: solid 4px var(--t-outline);
 	border-radius: 8px;
+	box-sizing: border-box;
 
 	transition: all 100ms ease-out;
 	transform-origin: center center;
@@ -307,22 +314,121 @@ button {
 }
 
 /* Bonus : Pour les fous qui vont au-delà */
+/* --- PALETTE ÉLECTRIQUE (POST-2048) --- */
 
+/* 4096 - Émeraude Profond */
 .tile-4096 {
-	--t-background: #3c3a32;
-	--t-text: #f9f6f2;
-	--t-outline: #2c2a22;
-	--t-light: #5c5a52;
-	--t-shadow: #1c1a12;
+	--t-background: #2ecc71;
+	--t-text: #eee;
+	--t-outline: #eee;
+	--t-light: #3ce583;
+	--t-shadow: #27ae60;
 	font-size: 1.25rem;
 }
 
+/* 8192 - Bleu Royal Électrique */
 .tile-8192 {
-	--t-background: #1e1e1e;
-	--t-text: #edc22e;
-	/* Texte doré sur fond noir */
-	--t-outline: #000;
-	--t-light: #333;
-	--t-shadow: #000;
+	--t-background: #3498db;
+	--t-text: #eee;
+	--t-outline: #eee;
+	--t-light: #41a7eb;
+	--t-shadow: #2980b9;
 	font-size: 1.25rem;
+}
+
+/* 16384 - Indigo / Violet Intense */
+.tile-16384 {
+	--t-background: #9b59b6;
+	--t-text: #ffffff;
+	--t-outline: #eee;
+	--t-light: #cd84f1;
+	--t-shadow: #8e44ad;
+	font-size: 1.1rem;
+}
+
+/* 32768 - Magenta / Cyberpunk Pink */
+.tile-32768 {
+	--t-background: #c56cf0;
+	--t-text: #ffffff;
+	--t-outline: #eee;
+	--t-light: #cd84f1;
+	--t-shadow: #9b59b6;
+	font-size: 1.1rem;
+}
+
+/* 65536 - L'entrée dans le Vide (Noir & Néon Cyan) */
+.tile-65536 {
+	--t-background: #111111;
+	--t-text: #0ff;
+	--t-outline: #0ff;
+	--t-light: #222;
+	--t-shadow: #000;
+	font-size: 1rem;
+	text-shadow: 0 0 8px #00ffff;
+}
+
+/* 131072 - L'Ultime Rainbow (Noir & Or Animé) */
+.tile-131072 {
+	--t-background: #000000;
+	--t-text: #ffffff;
+	--t-outline: #f39c12;
+	--t-light: #ffffff;
+	--t-shadow: #000;
+	font-size: 0.85rem;
+	font-weight: 900;
+	/* On combine l'animation de brillance et le bord arc-en-ciel */
+	animation: rainbow-border 2s linear infinite, ultimate-glow 1.5s infinite alternate;
+}
+
+/* --- ANIMATIONS --- */
+
+@keyframes ultimate-glow {
+	from {
+		filter: brightness(1) drop-shadow(0 0 5px #fff);
+	}
+
+	to {
+		filter: brightness(1.5) drop-shadow(0 0 20px #f1c40f);
+	}
+}
+
+@keyframes rainbow-border {
+	0% {
+		border: 3px solid #ff0000;
+		box-shadow: 0 0 20px #ff0000;
+	}
+
+	20% {
+		border: 3px solid #ffff00;
+		box-shadow: 0 0 20px #ffff00;
+	}
+
+	40% {
+		border: 3px solid #00ff00;
+		box-shadow: 0 0 20px #00ff00;
+	}
+
+	60% {
+		border: 3px solid #00ffff;
+		box-shadow: 0 0 20px #00ffff;
+	}
+
+	80% {
+		border: 3px solid #0000ff;
+		box-shadow: 0 0 20px #0000ff;
+	}
+
+	100% {
+		border: 3px solid #ff00ff;
+		box-shadow: 0 0 20px #ff00ff;
+	}
+}
+
+/* Application des effets de brillance sur tout le haut de gamme */
+.tile-4096,
+.tile-8192,
+.tile-16384,
+.tile-32768,
+.tile-65536 {
+	animation: shine 3s infinite ease-in-out;
 }
