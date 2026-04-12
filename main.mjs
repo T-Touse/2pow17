@@ -10,7 +10,7 @@ const gameOverScreen = document.getElementById('game-over');
 const finalScoreText = document.getElementById('final-score');
 const retryBtn = document.getElementById('retry-btn');
 
-const [element, grid] = useGridView(new Grid(5), container);
+const [element, grid] = useGridView(new Grid(5, 5), container);
 
 Model.load(grid)
 
