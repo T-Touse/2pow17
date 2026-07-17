@@ -118,27 +118,13 @@ button:hover{
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-#retry-btn {
-	margin-top: 1rem;
-	padding: 10px 20px;
-	background: #8f7a66;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	font-weight: bold;
-	cursor: pointer;
-}
-
 #game-container {
 	position: relative;
 	width: min(75vh, 95vw, 1024px);
-	/* Bloque la taille sur PC */
 	aspect-ratio: 1 / 1;
-	/* Reste toujours carré */
 	background: var(--grid-bg);
 	border-radius: .75rem;
 	padding: .75rem;
-	/* Padding relatif */
 	box-sizing: border-box;
 }
 
@@ -150,12 +136,18 @@ button:hover{
 	left: 0;
 	padding: .75rem;
 	box-sizing: border-box;
+}
 
-	.grid {
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
+.grid {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(var(--grid-size, 4), 1fr);
+	grid-template-rows: repeat(var(--grid-size, 4), 1fr);
+	gap: var(--grid-gap, .5rem);
+	padding: var(--grid-padding, .75rem);
+	box-sizing: border-box;
 }
 
 #tile-layer {
@@ -205,11 +197,10 @@ button:hover{
 
 /* Les tuiles */
 .tile {
-	position: absolute;
-	width: calc((100% - .5rem * 3 - .75rem * 2) / 4);
-	aspect-ratio: 1;
-	display: flex;
-
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 0;
 	z-index: 10;
 
 	background-color: var(--t-background);

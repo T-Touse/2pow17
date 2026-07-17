@@ -1,13 +1,13 @@
 
-export function toPos(col, row) {
+export function toPos(col, row, grid) {
 	return {
-		left: `${col * 25}%`,
-		top: `${row * 25}%`
+		gridColumn: col + 1,
+		gridRow: row + 1
 	}
 }
 
-export function setPos(el, col, row) {
-	const pos = toPos(col, row)
-	el.style.left = pos.left
-	el.style.top = pos.top
+export function setPos(el, col, row, grid) {
+	const pos = toPos(col, row, grid)
+	el.style.gridColumn = pos.gridColumn
+	el.style.gridRow = pos.gridRow
 }

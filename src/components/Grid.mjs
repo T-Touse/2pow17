@@ -51,6 +51,34 @@ export function Grid(grid){
 
 export function useGridView(grid,container){
 	const div = new Grid(grid)
-	container.appendChild(div)
+	const gridStatic = document.createElement('div')
+	gridStatic.className = 'grid-static'
+	const gridDiv = document.createElement('div')
+	gridDiv.className = 'grid'
+	gridDiv.style.setProperty('--grid-size', grid.cols)
+	gridDiv.style.setProperty('--grid-gap', '.5rem')
+	gridDiv.style.setProperty('--grid-padding', '.75rem')
+	const rows = grid.rows
+	const cols = grid.cols
+	console.log(rows,cols)
+	for(let y = 0;y<rows;y++){
+		for(let x = 0;x<cols;x++){
+			const tile = document.createElement('div')
+			tile.className = 'tile tile-empty'
+			gridDiv.appendChild(tile)
+		}
+	}
+	gridStatic.appendChild(gridDiv)
+	
+	const gridTile = document.createElement('div')
+	gridTile.className = 'grid-static'
+	div.style.setProperty('--grid-size', grid.cols)
+	div.style.setProperty('--grid-gap', '.5rem')
+	div.style.setProperty('--grid-padding', '.75rem')
+	gridTile.appendChild(div)
+
+	container.appendChild(gridStatic)
+	container.appendChild(gridTile)
+	
 	return [div,grid]
 }

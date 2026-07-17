@@ -20,7 +20,7 @@ export class Grid extends Model {
 
 	#history = new History();
 
-	constructor(rows = 4, cols = 4) {
+	constructor(rows = 4, cols = rows) {
 		super()
 		this.#rows = rows
 		this.#cols = cols
@@ -67,6 +67,7 @@ export class Grid extends Model {
 
 	#slideLine(tiles, index, isVert, isRev) {
 		let hasMerge = false
+		let hasMove = false
 
 		let target = 0
 		if (isRev) target = (isVert ? this.#rows : this.#cols) - 1
@@ -90,6 +91,7 @@ export class Grid extends Model {
 					tile._emit('stuck', { isVert, isRev })
 			} else {
 				tile.move(row, col)
+				hasMove = true
 			}
 			if (next && tile.canMerge(next)) {
 				tile.mergeWith(next)
@@ -98,12 +100,13 @@ export class Grid extends Model {
 				this.#tiles.delete(next)
 				i++
 
-				hasMerge ||= true
+				hasMerge = true
+				hasMove = true
 			}
 			target += step
 		}
 
-		return { hasMerge }
+		return { hasMerge, hasMove }
 	}
 
 
@@ -113,7 +116,9 @@ export class Grid extends Model {
 		const isRev = direction === "down" || direction === "right"
 
 		let hasMerge = false
+		let hasMove = false
 
+		const previousState = this.serialize()
 		const count = isVert ? this.#cols : this.#rows
 
 		for (let i = 0; i < count; i++) {
@@ -123,9 +128,13 @@ export class Grid extends Model {
 
 			const rsult = this.#slideLine(tiles, i, isVert, isRev)
 			hasMerge ||= rsult.hasMerge
+			hasMove ||= rsult.hasMove
 		}
-		this.#history.push(this.serialize())
-		this._emit('update', { hasMerge })
+
+		if (!hasMove) return
+
+		this.#history.push(previousState)
+		this._emit('update', { hasMerge, hasMove })
 		this.triggerAutoSave();
 	}
 
@@ -160,16 +169,16 @@ export class Grid extends Model {
 		const empties = this.getEmptyCells();
 		if (empties.length > 0) return false;
 
-		// Si plein, on vérifie si une fusion est encore possible horizontalement ou verticalement
 		const tilesArray = [...this.#tiles];
 
 		for (let t of tilesArray) {
-			// Check voisin droite et bas
-			const neighbors = tilesArray.filter(n =>
-				(n.row === t.row && n.col === t.col + 1) ||
-				(n.col === t.col && n.row === t.row + 1)
+			const hasSameValueNeighbor = tilesArray.some(n =>
+				(n.row === t.row && n.col === t.col + 1 && n.value === t.value) ||
+				(n.row === t.row && n.col === t.col - 1 && n.value === t.value) ||
+				(n.row === t.row + 1 && n.col === t.col && n.value === t.value) ||
+				(n.row === t.row - 1 && n.col === t.col && n.value === t.value)
 			);
-			if (neighbors.some(n => n.value === t.value)) return false;
+			if (hasSameValueNeighbor) return false;
 		}
 
 		this._emit('gameover', { score: this.#score });

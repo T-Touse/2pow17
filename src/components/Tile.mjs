@@ -47,26 +47,25 @@ function burst(el) {
 function update(el, tile) {
 	el.className = `tile tile-${tile.value}`
 	el.textContent = tile.value
-	setPos(el, tile.col, tile.row)
+	setPos(el, tile.col, tile.row, tile.grid)
 }
 
-function move(el, col, row) {
-	const sx = col > row ? 1.1 : .9
-	const sy = col < row ? 1.1 : .9
-	const { left, top } = toPos(col, row)
+function move(el, col, row, grid) {
+	setPos(el, col, row, grid)
 	el.animate([
 		{ scale: 1 },
-		{ scale: `${sy} ${sx}` },
-		{ offset: .9, scale: `${sx} ${sy}`, left, top },
-		{ scale: 1, left, top },
+		{ scale: 1.04 },
+		{ scale: 1 }
 	], {
-		duration: 180
+		duration: 140,
+		easing: 'ease-out'
 	})
-	setPos(el, col, row)
 }
 
 export function Tile(tile, frag) {
 	const div = document.createElement('div');
+	const grid = tile.grid
+	console.log(grid)
 	update(div, tile);
 
 	tile.on?.("spawn", () => {
@@ -95,7 +94,7 @@ export function Tile(tile, frag) {
 
 	tile.on?.("move", ({ row, col }) => {
 		// Calcul de la direction pour incliner la tuile pendant le vol
-		move(div, col, row);
+		move(div, col, row, grid);
 	});
 
 	tile.on?.("merge", () => {
@@ -106,7 +105,7 @@ export function Tile(tile, frag) {
 	});
 
 	tile.on?.("mergeInto", (mergeTile) => {
-		move(div, mergeTile.col, mergeTile.row);
+		move(div, mergeTile.col, mergeTile.row, mergeTile.grid);
 		// On attend la fin du slide avant de supprimer
 		setTimeout(() => div.remove(), 180);
 	});

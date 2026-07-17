@@ -8,7 +8,7 @@ serve({
 
 		// Redirection par défaut sur l'index
 		if (path === "/") path = "/index.html";
-
+		console.log(path)
 		// Sert le fichier depuis le dossier local
 		const file = Bun.file(`.${path}`);
 		return new Response(file);

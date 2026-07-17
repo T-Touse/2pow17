@@ -1,10 +1,10 @@
 export class Model {
 	#events = new Map
 
-	get storageKey(){
+	get storageKey() {
 		return this.constructor.name
 	}
-	
+
 	on(name, listener) {
 		if (!this.#events.has(name))
 			this.#events.set(name, new Set)
@@ -19,16 +19,16 @@ export class Model {
 	hydrate(data) { }
 	serialize() { }
 
-	static save(model){
+	static save(model) {
 		if (!model.storageKey) return;
-        const data = model.serialize();
-        localStorage.setItem(model.storageKey, JSON.stringify(data));
+		const data = model.serialize();
+		localStorage.setItem(model.storageKey, JSON.stringify(data));
 	}
-	static load(model){
+	static load(model) {
 		if (!model.storageKey) return null;
-        const saved = localStorage.getItem(model.storageKey);
+		const saved = localStorage.getItem(model.storageKey);
 		model.hydrate(saved ? JSON.parse(saved) : null)
-        return model
+		return model
 	}
 }
 
@@ -78,7 +78,7 @@ export class Fragment {
 }
 
 export class SoundManager {
-	play(src,playbackRate = 1) {
+	play(src, playbackRate = 1) {
 		const audio = new Audio(src);
 		audio.playbackRate = playbackRate;
 
