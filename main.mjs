@@ -10,6 +10,7 @@ const gameOverScreen = document.getElementById('game-over');
 const finalScoreText = document.getElementById('final-score');
 const retryBtn = document.getElementById('retry-btn');
 
+//grille 5x5
 const [element, grid] = useGridView(new Grid(5), container);
 window.__grid = grid;
 

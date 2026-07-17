@@ -20,7 +20,8 @@ export class Grid extends Model {
 
 	#history = new History();
 
-	constructor(rows = 4, cols = rows) {
+	//grille 5x5
+	constructor(rows = 5, cols = rows) {
 		super()
 		this.#rows = rows
 		this.#cols = cols
@@ -203,8 +204,8 @@ export class Grid extends Model {
 
 		// 2. Restauration des propriétés
 		this.#score = data.score || 0;
-		this.#rows = data.rows || 4;
-		this.#cols = data.cols || 4;
+		this.#rows = data.rows || this.#rows;
+		this.#cols = data.cols || this.#cols;
 
 		// 3. Recréation des tuiles
 		if (data.tiles) {
