@@ -204,8 +204,8 @@ export class Grid extends Model {
 
 		// 2. Restauration des propriétés
 		this.#score = data.score || 0;
-		this.#rows = data.rows || this.#rows;
-		this.#cols = data.cols || this.#cols;
+		this.#rows = this.#rows;//data.rows || 
+		this.#cols = this.#cols;//data.cols || 
 
 		// 3. Recréation des tuiles
 		if (data.tiles) {
